@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 export type OwnerDoucment = Owner & Document;
+
 @Schema()
 export class Owner {
-  @Prop()
+  @Prop({ required: true })
   firstname: string;
   @Prop()
   lastname: string;

@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { CreateOwnerDTO } from './dto/create-owner.dto';
 import { OwnerService } from './owner.service';
 
@@ -12,7 +22,16 @@ export class OwnerController {
   }
 
   @Post()
+  @HttpCode(HttpStatus.OK)
   async addOwner(@Body() dto: CreateOwnerDTO) {
-    return await this.ownerService.addOwner(dto);
+    // return await this.ownerService.addOwner(dto);
+    const addowner = await this.ownerService.addOwner(dto);
+    return {
+      message: 'User has been successfuly added!',
+      owner: {
+        firstname: addowner.firstname,
+        lastname: addowner.lastname,
+      },
+    };
   }
 }

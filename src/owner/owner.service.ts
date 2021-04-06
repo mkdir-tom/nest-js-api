@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateOwnerDTO } from './dto/create-owner.dto';
@@ -15,7 +15,18 @@ export class OwnerService {
   }
 
   async addOwner(dto: CreateOwnerDTO) {
-    const owner = await this.ownerModel.create(dto);
-    return owner;
+    const owner = await this.ownerModel
+      .findOne({ firstname: dto.firstname })
+      .exec();
+
+    if (owner)
+      throw new ConflictException('This username is taken, try another.');
+
+    const newUser = await this.ownerModel.create({
+      firstname: dto.firstname,
+      lastname: dto.lastname,
+    });
+
+    return newUser;
   }
 }

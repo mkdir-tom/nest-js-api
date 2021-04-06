@@ -29,6 +29,8 @@
     "@nestjs/passport": "^7.1.5",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/platform-fastify": "^7.6.15",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
     "fastify": "^3.14.1",
     "handlebars": "^4.7.7",
     "mongoose": "^5.12.3",
